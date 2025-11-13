@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<form class="row g-3 col-12 mx-auto" action="{{ url_for('search_resetas') }}" method="POST">
+  <div class="col-9">
+    <label for="receta" class="visually-hidden"></label>
+    <input type="text" class="form-control" id="receta" name="receta" placeholder="Ingresa alguna receta o algo que quieras saber sobre alimentacion saludable" required>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+  </div>
+</form>   
+
+{% endblock %}
