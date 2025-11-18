@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block contenido %}
+
+<form method="POST">
+    <input type="text" name="ingrediente" placeholder="Ingresa un ingrediente" required>
+    <button type="submit">Buscar</button>
+</form>
+
+{% if recetas %}
+    <h2>Resultados:</h2>
+    <ul>
+        {% for r in recetas %}
+            <li>{{ r.title }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+
+{% endblock %}

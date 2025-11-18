@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,jsonify
 import requests
-
-API = "https://api.spoonacular.com/recipes/findByIngredients"
 app = Flask(__name__)
-app.secret_key = 'claVe_SeCReTa_My_ClAvE'
+API_URL = 'https://api.spoonacular.com/recipes/findByIngredients'
+API_KEY = '923b514b2c604404954302eaebfea6fd'  
 
 
 @app.route('/')
@@ -15,39 +14,24 @@ def rs():
     return render_template('reseta.html')
 
 
+@app.route('/buscar', methods=['GET', 'POST'])
+def buscar_recetas():
+    recetas = []
+    
+    if request.method == 'POST':
+        ingrediente = request.form.get('ingrediente')
 
+        params = {
+            'apiKey': API_KEY,
+            'query': ingrediente,   
+        }
 
-@app.route('/search', methods=['POST'])
-def search_resetas():
-    resetas = request.form.get('reseta', '').strip().lower()  
+        respuesta = requests.get(API_URL, params=params)
+        data = respuesta.json()
 
-    if not resetas:
-        flash('Por favor, ingresa bien la información', 'error')
-        return redirect(url_for('index'))
+        recetas = data.get('params', [])
 
-    try:
-        respuesta = requests.get(f"{API}{resetas}")
-        if respuesta.status_code == 200:
-            resetas_data = respuesta.json()
-            formatted_data = format_resetas_data(resetas_data)
-            return render_template('reseta.html', resetas=formatted_data)
-        else:
-            flash('reseta no encontrado. Por favor, intenta de nuevo.', 'error')
-            return redirect(url_for('rs'))
-
-    except requests.exceptions.RequestException:
-        flash('Error al conectar con la API. Por favor, intenta de nuevo más tarde.', 'error')
-        return redirect(url_for('index'))
-
-
-def format_resetas_data(resetas_data):
-    return 
-
-
-
-
-
-
+    return render_template('recetas.html', recetas=recetas)
 
 if __name__ == '__main__':
     app.run(debug=True)
