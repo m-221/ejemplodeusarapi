@@ -1,13 +1,36 @@
 {% extends 'base.html' %}
 {% block contenido %}
-<form class="row g-3 col-12 mx-auto" action="{{ url_for('search_resetas') }}" method="POST">
-  <div class="col-9">
-    <label for="receta" class="visually-hidden"></label>
-    <input type="text" class="form-control" id="receta" name="receta" placeholder="Ingresa alguna receta o algo que quieras saber sobre alimentacion saludable" required>
-  </div>
-  <div class="col-auto">
-    <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-  </div>
-</form>   
+
+<div class="container  d-flex justify-content-center align-items-center" style="">
+    <div class="card shadow-lg p-4 rounded-4 col-12  bg-success-subtle col-md-8 col-lg-6">
+        
+        <h2 class="text-center mb-4 fw-bold">Buscar Recetas Saludables</h2>
+
+        <form class="row g-3" action="{{ url_for('rs') }}" method="POST">
+            
+            <div class="col-12">
+                <label class="form-label fw-semibold">Escribe un ingrediente o una receta:</label>
+                <input 
+                    type="text" 
+                    class="form-control form-control-lg rounded-3" 
+                    id="receta" 
+                    name="receta" 
+                    placeholder="Ejemplo: pollo, avena, ensalada…" 
+                    required
+                >
+            </div>
+
+            <div class="col-12 text-center">
+                <form method= "POST" action="{{ url_for('') }}">
+                <button type="submit" class="btn btn-success btn-lg rounded-3 px-5">
+                    🔍 Buscar
+                </button>
+            </form>
+            </div>
+
+        </form>
+
+    </div>
+</div>
 
 {% endblock %}

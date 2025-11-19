@@ -1,0 +1,34 @@
+
+
+{% extends 'base.html' %}
+{% block contenido %}
+
+
+
+
+{% if recetas %}
+    <h2>Resultados:</h2>
+    <ul>
+            <li>
+                <ul>
+                    {% for ingrediente in recetas.usedIngredients %}
+                        <li>{{ ingrediente.name }} - {{ ingrediente.amount }} {{ ingrediente.unit }}</li>
+                    {% endfor %}
+                    {% for ingrediente in recetas.missedIngredients %}
+                        <li><strong></strong> {{ ingrediente.name }} - {{ ingrediente.amount }} {{ ingrediente.unit }}</li>
+                    {% endfor %}
+                </ul>
+                {% if recetas.analyzedInstructions %}
+                    <h4>Instrucciones:</h4>
+                    <ol>
+                        {% for step in recetas.analyzedInstructions[0].steps %}
+                            <li>{{ step.step }}</li>
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </li>
+    </ul>
+{% endif %}
+
+
+{% endblock %}
